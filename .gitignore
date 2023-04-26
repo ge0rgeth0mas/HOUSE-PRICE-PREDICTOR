@@ -1,0 +1,7 @@
+*/.DS_Store
+.venv
+resources/columns.json
+resources/house_price_predictor.pickle
+resources/meanyear.json
+poetry.lock
+poetry.toml
