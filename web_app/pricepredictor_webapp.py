@@ -105,7 +105,7 @@ def shap_gen(df):
 
 # Web app UI
 st.title("Melbourne House Price Predictor")
-st.image("Resources/melbourne_houses.jpeg")
+st.image(path+"melbourne_houses.jpeg")
 
 st.write("#### The web app predicts the selling price of a house based on past data")
 
@@ -113,12 +113,12 @@ st.write("##### Enter the following details to get a prediction of the selling p
 
 typ, rms = st.columns([2, 1])
 housetype = typ.selectbox("Type of property", ["House/Cottage/villa", "Townhouse", "Unit/Duplex", "Other"], index = 0)
-if housetype == "House/Cottage/villa" or housetype == "Other":
-    type="h"
-elif housetype == "Townhouse":
+if housetype == "Townhouse":
     type="t"
 elif housetype == "Unit/Duplex":
     type="u"
+else:
+    type="h"
 rooms = rms.number_input("Number of rooms in house", min_value=1, max_value=12)
 br, cr = st.columns(2)
 bathroom = br.number_input("Number of bathrooms in house", min_value=0, max_value=12)
