@@ -9,7 +9,7 @@ path = os.getcwd()
 if __name__ == '__main__':
     path = path+'/dataengineering/mydb_config.ini' #in case the module is being used directly
 else:
-    if os.path.basename(os.path.normpath(path))== 'melbourne-house-price-predictor':
+    if os.path.basename(os.path.normpath(path))== 'HOUSE-PRICE-PREDICTOR':
         path = path+'/dataengineering/mydb_config.ini' # in case the module is being called from a python script that gets CWD from os.getcwd()
     else:
         parent_dir = os.path.dirname(path)
