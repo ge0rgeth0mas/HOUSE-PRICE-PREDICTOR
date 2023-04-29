@@ -1,4 +1,7 @@
 import configparser
+import current_folder_path as cf_path
+
+path = cf_path.get_current_path()+"/"
 
 config = configparser.ConfigParser()
 
@@ -11,5 +14,5 @@ config['melb_data'] = {
     'port' : '5432',
 }
 
-with open('dataengineering/mydb_config.ini', 'w') as configfile:
+with open(path+'mydb_config.ini', 'w') as configfile:
     config.write(configfile)

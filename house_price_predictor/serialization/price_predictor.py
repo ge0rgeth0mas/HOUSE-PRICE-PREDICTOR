@@ -1,7 +1,7 @@
 import pandas as pd
 import numpy as np
 import os
-from dataengineering.loaddata_fromdb import *
+from data_engineering.loaddata_fromdb import *
 
 # Import Data to Dataframe
 melb_house_prices = get_df('melb_data')

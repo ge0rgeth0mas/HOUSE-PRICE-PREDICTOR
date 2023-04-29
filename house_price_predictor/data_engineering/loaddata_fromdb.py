@@ -2,18 +2,24 @@ import pandas as pd
 import sqlalchemy as db
 import configparser
 import os
+from . import current_folder_path as cf_path
+
+path = cf_path.get_current_path()+"/"
+print(path)
 
 #Read config file containing databas login credentials
 config=configparser.ConfigParser()
-path = os.getcwd()
 if __name__ == '__main__':
-    path = path+'/dataengineering/mydb_config.ini' #in case the module is being used directly
+    path = path+'mydb_config.ini' #in case the module is being used directly
+    
 else:
-    if os.path.basename(os.path.normpath(path))== 'HOUSE-PRICE-PREDICTOR':
-        path = path+'/dataengineering/mydb_config.ini' # in case the module is being called from a python script that gets CWD from os.getcwd()
+    print(os.path.basename(os.path.normpath(path)))
+    if os.path.basename(os.path.normpath(path))== 'data_engineering':
+        path = path+'mydb_config.ini' # in case the module is being called from a python script that gets CWD from os.getcwd()
     else:
+        path = os.getcwd()
         parent_dir = os.path.dirname(path)
-        path = parent_dir+'/dataengineering/mydb_config.ini' # in case the module is being called from an IPYNB that gets its working folder from os.getcwd()
+        path = parent_dir+'/data_engineering/mydb_config.ini' # in case the module is being called from an IPYNB that gets its working folder from os.getcwd()
 
 config.read(path)
 

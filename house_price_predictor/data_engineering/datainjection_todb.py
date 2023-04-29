@@ -3,13 +3,15 @@ import psycopg2
 import configparser
 import getdata_from_csv as csv_df
 import subprocess
+import current_folder_path as cf_path
 
+path = cf_path.get_current_path()+"/"
 #Create database using shell command in createdb.sh
-subprocess.call("./dataengineering/createdb.sh", shell=True)
+subprocess.call(path+"createdb.sh", shell=True)
 
 #Read config file containing databas login credentials
 config=configparser.ConfigParser()
-config.read('dataengineering/mydb_config.ini')
+config.read(path+'mydb_config.ini')
 
 hostname = config['melb_data']['host'] #['melb_data'] is the section name within the config file.
 database = config['melb_data']['database']
