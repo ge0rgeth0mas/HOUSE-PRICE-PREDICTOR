@@ -9,7 +9,7 @@ import os
 
 shap.initjs()
 # Import trained model
-path = os.getcwd()+'/resources/'
+path = os.getcwd()+'/house_price_predictor/resources/'
 import pickle
 
 pickle_filename = 'house_price_predictor.pickle'
@@ -21,6 +21,16 @@ try:
 except Exception as e:
     print("Error while loading model from {} : {}".format(pickle_filename, e))
 
+# Import target encoder
+te_filename = 'target_encoder.pickle'
+try:
+    with open(path+te_filename, 'rb') as f:
+        te = pickle.load(f)
+    print("Target encoder loaded successfully from {}".format(te_filename))
+
+except Exception as e:
+    print("Error while loading target encoder from {} : {}".format(te_filename, e))
+
 # Import column names
 import json
 columns_filename = "columns.json"
@@ -31,17 +41,19 @@ try:
 except Exception as e:
     print("Error while loading columns from {} : {}".format(columns_filename, e))
 
-# Import mean year
-meanyear_filename = "meanyear.json"
+# Import suburb_propertycount_dict
+dictionary_filename = "propertycount_persuburb.json"
 try:
-    with open(path+meanyear_filename, "r") as f:
-        mean_yearbuilt = json.load(f)['meanyear']
-    print("Mean year loaded successfully")
+    with open(path+dictionary_filename, "r") as f:
+        propertycount_persuburb = json.load(f)
+    print("Propertycount dictionary loaded successfully")
 except Exception as e:
-    print("Error while loading mean year from {} : {}".format(meanyear_filename, e))
+    print("Error while loading dictionary from {} : {}".format(dictionary_filename, e))
 
+
+ #["rooms", "type", "sellerg", "distance", "bathroom", "lattitude", "longtitude", "regionname", "propertycount", "year_sold", "landsize_log"]}
 # Function to predict price
-def predict_price(rooms, distance, bathroom, car, lattitude, longtitude, landsize, type, seller, yearbuilt=None):
+def predict_price(rooms, type, seller, distance, bathroom, lattitude, longtitude, regionname, landsize):
     x = np.zeros(len(columns))
     x[0]=rooms
     x[1]=distance

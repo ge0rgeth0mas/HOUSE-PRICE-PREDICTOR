@@ -56,6 +56,18 @@ try:
 except Exception as e:
     print("Error while saving model to {} : {}".format(pickle_filename, e))
 
+# Export Target Encoder to pickle file
+
+path = os.getcwd()+'/house_price_predictor/resources/'
+te_filename = 'target_encoder.pickle'
+try:
+    with open(path+te_filename, 'wb') as f:
+        pickle.dump(te, f)
+    print("Target encoder saved successfully to {}".format(te_filename))
+
+except Exception as e:
+    print("Error while saving target encoder to {} : {}".format(te_filename, e))
+
 # Export column names
 import json
 
