@@ -13,3 +13,4 @@ house_price_predictor/resources/columns.json
 .gitignore
 house_price_predictor/resources/meanyear.json
 house_price_predictor/resources/propertycount_persuburb.json
+house_price_predictor/resources/suburb.json
