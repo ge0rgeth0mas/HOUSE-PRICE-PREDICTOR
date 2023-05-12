@@ -1,8 +1,3 @@
-<script src="https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js"></script>
-<script>mermaid.initialize({startOnLoad:true});</script>
-
-
-
 # **House Price Prediction Web App**
 ## **An end to end Data Science project using regression models**
 ---
