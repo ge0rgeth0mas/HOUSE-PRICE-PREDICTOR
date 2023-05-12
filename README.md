@@ -90,29 +90,96 @@ graph TD;
     N --> R[Price Explanation];
 ```
 ### **Data Engineering**
-The historical data on sales prices for houses in Melbourne [^1].
-[^1]: This is the first footnote.
+The historical data on sales prices for houses in Melbourne<sup>[1](#ref1)</sup> was collected as a csv file and and injected into PostgreSQL database using Psycopg2. This has the following advantages:
+1. **Performance**: SQL databases are optimized for handling large amounts of structured data. Querying from a database is faster when the data is large.
+2. **Data integrity**: SQL databases have built-in mechanisms for ensuring data integrity, such as constraints, indexes, and transactions. These mechanisms can help prevent data errors and inconsistencies, which can be difficult to detect and correct in a large DataFrame.
+3. **Scalability**: SQL databases can handle large datasets that may not fit into memory, and can also be scaled up by adding more computing resources or partitioning data across multiple servers. 
+4. **Security**: SQL databases offer advanced security features, such as user authentication and access control, to protect sensitive data.
+5. **Collaboration**: By storing data in a centralized SQL database, multiple users can access and query the same dataset concurrently.
 
-The goal of the project is to predict house prices in Melbourne^1^, using machine learning algorithms and a dataset of historical house sales. The web application allows users to enter information about a house and receive a predicted sale price based on the trained model.
+A script that loads the queried data into a Pandas dataframe using SQLAlchemy has also been created. This script is used for the remaining prcoesses, when the data is required.
 
-The project is designed to showcase an end-to-end data science project. It covers various aspects as follows:
+### **Data Analysis**
+Exploratory Data Analysis(EDA) was conducted on the data to gather insights from the data. Viuslaizations were created using matplotlib and seaborn to get a deeper understanding of the data. This aided in identifying outliers, understanding correlations, exploring fetaure engineering possibilities, and in indentifying features that might be better dropped due to being redundant or providing little to know value.
 
-- Data Engineering : Data collection, Data injection to a database, getting data from database to  dataframe, etc.
-- Exploratory data analysis : Analyse the data and identify ay features to be removed from the data before training a model.
-- Preprocessing : Remove Outliers, Feature engineering, train-test split, etc.
-- Model Selection : Prepare a Baseline model and metrics to evaluate models, Model Iteration, Model Tuning, Finalize best model, features and hyeperparameters. 
-- Model training and Serializaton : Use the best model and train on complete data for producton, export model to a pickle file for use in Web-App
-- Web application development : Make a web app using the pickle file, that predicts the price of houses basd on user-input features and shows what features contributed to an increase or decrease in price  using shap values.
-- Machine Learning Explainability : Use Perumtation Importance, Partial Depedndence Plots, and SHAP values to explain the contributio of features to the predicted price.
+### **Modeling**
+#### **Preprocessing**
+The insights gathere from EDA enabled us to perform an initial feature selection and feature engineering. The data was then split into a **training set** and **test set**. 
+Examples of feature engineering done are:
+1. The natural log of the landsize was observed to show a higher correlation with price and was used to replace the landsize feature.
+2. The categorical features were encoded with One-Hot Encoding and Target encoding. Target encoding proved to be the better option and was therefore employed in the final model.
 
-Here's a screenshot of the app:
+#### **Model Selection**
+The training and test set was used to evaluate the performance of the following supervised learning models from Scikit-Learn:
+1. **Liner Regression**
+2. **Decsion Tree Regressor**
+3. **Random Forest Regressor**
 
+Random Forest Regressor proved to be the better choice for the data as it had the lowest **Mean Absolute Error(MAE)** and the highest **R2 Score**.
 
+#### **Model Iteration**
+The Random Forest Regressor was then used to evalaute various combinations of features using 5 fold **cross-validation**. This aided in **Feature Selection** to get the best predictions and also to decide what inputs would be required from a user to predict a house's price.
+The selected features were:
+1. The number of rooms
+2. The number of bathrooms
+3. The type of property (House/Cottage/Villa, Townhouse, Unit/Duplex, or other)
+4. The person who sold the house
+5. The coordinates of the house (Latitude and Logitude)
+6. The region where the house is located
+7. The number of properties in the suburb
+8. The year of sale
+9. Natural log of the landsize
+10. Distance of the property from the Central Business District (CBD)
+
+Once the features that aided in getting the best prediction scores were identified, **Hyperparameter Tuning** was done to identify the parameter that gave the best score in Cross-Validation using **GridSearchCV**. The features and hyperparemeters were also tested for **Overfitting** using the test set.
+
+The optimum hyperparemeters for the Random Forest Regressor identified were:
+* `n_estimators=450`
+* `max_features=4`
+
+### **Serialization**
+The entire process of feature selection, feature engineering and model training was carried out on the entire data in a `price_predictor.py` script for production. The script also exported the following to the resouces folder for access by the web app:
+1. The trained model (`pickle` file)
+2. The fitted target encoder (`pickle` file)
+3. The names of features used to train the model (`JSON` file)
+4. The Number of properties in each suburb along with the region where each suburb falls (`JSON` file)
+
+### **Web App**
+The front end of the web app is designed using `streamlit`. The User Interface is kept minimalistic and takes in the following details from the user as Input:
+1. Type of property
+2. Rooms 
+3. Bathrooms 
+4. Suburb
+5. Coordinates of property
+6. Distance from CBD
+7. Size of land, and
+8. Name of Seller
+
+Upon entering the details and clicking the **Predict** button, the script does the following:
+1. It uses the imported Suburbs data to check the Property count and Region corresponding to the Suburb.
+2. It uses the imported target encoder to transform the type, region and seller name to a numerical value for use by the ML model.
+3. It uses the imported column names to create an observations pertaining to the user's house.
+4. It uses the imported trained model to predict the selling price for the property with **78% accuracy** as observed with R2 score.
+5. It calculates the **SHAP values** for the observation and displays a bar chart that shows the contribution that each feature had, in raising or lowering the price of the house.
+
+#### **Web App Screenshots**
 <img src="./house_price_predictor/resources/webapp_screenshot1.png" alt="Screenshot of my app" width="500"/><br>
 
 <img src="./house_price_predictor/resources/webapp_screenshot2.png" alt="Screenshot of my app" width="500"/>
 
-The project demonstrates the entire data science process, from data collection to web application development, and can serve as a template for similar projects in the future.
+### **Model Explanation**
+A Jupyter notebook was used to explain the importance of the features from the data in making predictions. Three tools were used for this purpose, namely, `Permutation Importance`, `Partial Dependence Plots`, and `SHAP` Values (an acronym from SHapley Additive exPlanations).
+
+1. **Permutation Importance** - Shows us what features most affect predictions.
+2. **Partial Dependence Plots** - Shows us how a feature affects predictions.
+3. **SHAP Values** - SHows us the impact of each feature for a particular prediction.
+
+Note: These tools are used after a model has been fit. It uses the same script as the one from serialization to train the model.
+
+The following observations were recorded from the excercise:
+1. 
+
+
 
 ### **References**
-[1]: https://www.kaggle.com/datasets/dansbecker/melbourne-housing-snapshot Melbourne housing prices snapshot from Kagglle
+1. <a id="ref1"></a>: https://www.kaggle.com/datasets/dansbecker/melbourne-housing-snapshot Melbourne housing prices snapshot from Kagglle
