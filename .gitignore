@@ -1,8 +1,6 @@
 */.DS_Store
 .venv
-*/columns.json
 */house_price_predictor.pickle
-*/meanyear.json
 poetry.lock
 poetry.toml
 */__pycache__
@@ -11,6 +9,4 @@ __pycache__
 house_price_predictor/resources/house_price_predictor.pickle
 house_price_predictor/resources/columns.json
 .gitignore
-house_price_predictor/resources/meanyear.json
-house_price_predictor/resources/propertycount_persuburb.json
 house_price_predictor/resources/suburb.json

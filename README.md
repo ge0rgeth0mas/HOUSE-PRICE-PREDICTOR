@@ -19,6 +19,7 @@ The transformed data is then used to train a baseline model, from which the best
 - [Modeling](#modeling)
 - [Serialization](#serialization)
 - [Web App](#web-app)
+- [Running the Web App](#running-the-web-app)
 - [Model Explanataion](#model-explanation)
 - [Conclusion](#conclusion)
 - [Future Work](#future-work)
@@ -177,6 +178,23 @@ Upon entering the details and clicking the **Predict** button, the script does t
 <img id="output" src="./house_price_predictor/resources/webapp_screenshot2.png" alt="Screenshot2 of my app" width="500"/>
 
 <br>
+
+### **Running the Web App**
+#### Prerequistites 
+Before running the web app, you need to have [Python 3](https://www.python.org/downloads/) and [Poetry](https://python-poetry.org/docs/#installation) installed on your system.
+
+You can also install poetry using the following command
+
+```console
+pipx install poetry
+```
+
+#### Run the web app with following steps
+1. Clone 
+
+
+
+
 
 ### **Model Explanation**
 A Jupyter notebook was used to explain the importance of the features from the data in making predictions. Three tools were used for this purpose, namely, `Permutation Importance`, `Partial Dependence Plots`, and `SHAP` Values (an acronym from SHapley Additive exPlanations).
