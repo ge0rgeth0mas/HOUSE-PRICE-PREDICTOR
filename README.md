@@ -181,6 +181,8 @@ Upon entering the details and clicking the **Predict** button, the script does t
 ### **Model Explanation**
 A Jupyter notebook was used to explain the importance of the features from the data in making predictions. Three tools were used for this purpose, namely, `Permutation Importance`, `Partial Dependence Plots`, and `SHAP` Values (an acronym from SHapley Additive exPlanations).
 
+Note: These tools are used after a model has been fit.
+
 1. **Permutation Importance** - Shows us what features most affect predictions.
 
 Here is the output for our data:
@@ -215,8 +217,6 @@ We observe that an increse in number of rooms and bathrooms leads to an increase
 3. **SHAP Values** - Shows us the impact of each feature for a particular prediction.
 
 An example of the SHAP values being used to explain feature importance for a particular set of features used to make a prediction can be seen in the web app screenshot [above](#output).
-
-Note: These tools are used after a model has been fit.
 
 ### **Conclusion**
 Real world data on past recorded sales price for houses in Melbourne has been used to develop an end-to-end data science project. The project shows the various stages involved such as data acquisition, data cleaning, exploratory data analysis (EDA), feature engineering, modeling, serialization, and web app deployment along with ML explainability.
