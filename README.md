@@ -181,4 +181,4 @@ Note: These tools are used after a model has been fit.
 
 
 ### **References**
-1. <a id="ref1"></a>: https://www.kaggle.com/datasets/dansbecker/melbourne-housing-snapshot Melbourne housing prices snapshot from Kagglle
+1. <a id="ref1"></a>: https://www.kaggle.com/datasets/dansbecker/melbourne-housing-snapshot Melbourne housing prices snapshot from Kaggle
