@@ -14,6 +14,15 @@ The transformed data is then used to train a baseline model, from which the best
 - [Tools and Technologies](#tools-and-technologies)
 - [Folder Structure](#folder-structure)
 - [Process Flow Chart](#process-flow-chart)
+- [Data Engineering](#data-engineering)
+- [Data Analysis](#data-analysis)
+- [Modeling](#modeling)
+- [Serialization](#serialization)
+- [Web App](#web-app)
+- [Model Explanataion](#model-explanation)
+- [Conclusion](#conclusion)
+- [Future Work](#future-work)
+- [References](#references)
 
 ### **Tools and Technologies**
 - Programming Language: Python
@@ -165,20 +174,58 @@ Upon entering the details and clicking the **Predict** button, the script does t
 #### **Web App Screenshots**
 <img src="./house_price_predictor/resources/webapp_screenshot1.png" alt="Screenshot1 of my app" width="500"/><br>
 
-<img src="./house_price_predictor/resources/webapp_screenshot2.png" alt="Screenshot2 of my app" width="500"/>
+<img id="output" src="./house_price_predictor/resources/webapp_screenshot2.png" alt="Screenshot2 of my app" width="500"/>
+
+<br>
 
 ### **Model Explanation**
 A Jupyter notebook was used to explain the importance of the features from the data in making predictions. Three tools were used for this purpose, namely, `Permutation Importance`, `Partial Dependence Plots`, and `SHAP` Values (an acronym from SHapley Additive exPlanations).
 
 1. **Permutation Importance** - Shows us what features most affect predictions.
-<iframe src="./house_price_predictor/resources/weights.html" width="50%"></iframe>
 
+Here is the output for our data:
+| Weight        | Feature        |
+| ------------- | -------------- |
+| 0.1829 ± 0.0189 | type         |
+| 0.1663 ± 0.0213 | rooms        |
+| 0.1629 ± 0.0183 | regionname   |
+| 0.1626 ± 0.0051 | distance     |
+| 0.1506 ± 0.0189 | landsize_log |
+| 0.0942 ± 0.0049 | lattitude    |
+| 0.0862 ± 0.0043 | longtitude   |
+| 0.0638 ± 0.0069 | bathroom     |
+| 0.0585 ± 0.0090 | sellerg      |
+| 0.0133 ± 0.0026 | propertycount|
+| 0.0044 ± 0.0014 | year_sold    |
+
+The features are shown in decreasing order of importance.
 
 2. **Partial Dependence Plots** - Shows us how a feature affects predictions.
-3. **SHAP Values** - SHows us the impact of each feature for a particular prediction.
+
+<img src="./house_price_predictor/model_explanation/images/partial_dependence_1.png" alt="Rooms PDD" width="250" height="250">
+<img src="./house_price_predictor/model_explanation/images/partial_dependence_3.png" alt="Distance PDD" width="250" height="250">
+<img src="./house_price_predictor/model_explanation/images/partial_dependence_4.png" alt="Bathrooms PDD" width="250" height="250">
+<img src="./house_price_predictor/model_explanation/images/partial_dependence_5.png" alt="Latitude PDD" width="250" height="250">
+<img src="./house_price_predictor/model_explanation/images/partial_dependence_6.png" alt="Longitude PDD" width="250" height="250">
+<img src="./house_price_predictor/model_explanation/images/partial_dependence_7.png" alt="Property Count PDD" width="250" height="250">
+<img src="./house_price_predictor/model_explanation/images/partial_dependence_8.png" alt="Landsize PDD" width="250" height="250">
+
+We observe that an increse in number of rooms and bathrooms leads to an increase the price of a property, while being further away from the CBD generally tends to lower the property value. We can also see that the larger the landsize the higher the property value. Latitude, Logitude, and property count gives us some interesting insights as well while haveing a more non-linear relationshio with price.
+
+3. **SHAP Values** - Shows us the impact of each feature for a particular prediction.
+
+An example of the SHAP values being used to explain feature importance for a particular set of features used to make a prediction can be seen in the web app screenshot [above](#output).
 
 Note: These tools are used after a model has been fit.
 
+### **Conclusion**
+Real world data on past recorded sales price for houses in Melbourne has been used to develop an end-to-end data science project. The project shows the various stages involved such as data acquisition, data cleaning, exploratory data analysis (EDA), feature engineering, modeling, serialization, and web app deployment along with ML explainability.
+
+### **Future Work**
+Possible future works include:
+1. Including more models such as `LightGBM` and `XGBoost` regressors in model selection.
+2. Automating data collection to load more data in to the databse.
+3. Deploying the web app onto a cloud service.
 
 ### **References**
 1. <a id="ref1"></a>: https://www.kaggle.com/datasets/dansbecker/melbourne-housing-snapshot Melbourne housing prices snapshot from Kaggle
