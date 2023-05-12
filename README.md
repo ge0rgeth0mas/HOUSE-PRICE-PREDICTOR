@@ -163,22 +163,21 @@ Upon entering the details and clicking the **Predict** button, the script does t
 5. It calculates the **SHAP values** for the observation and displays a bar chart that shows the contribution that each feature had, in raising or lowering the price of the house.
 
 #### **Web App Screenshots**
-<img src="./house_price_predictor/resources/webapp_screenshot1.png" alt="Screenshot of my app" width="500"/><br>
+<img src="./house_price_predictor/resources/webapp_screenshot1.png" alt="Screenshot1 of my app" width="500"/><br>
 
-<img src="./house_price_predictor/resources/webapp_screenshot2.png" alt="Screenshot of my app" width="500"/>
+<img src="./house_price_predictor/resources/webapp_screenshot2.png" alt="Screenshot2 of my app" width="500"/>
 
 ### **Model Explanation**
 A Jupyter notebook was used to explain the importance of the features from the data in making predictions. Three tools were used for this purpose, namely, `Permutation Importance`, `Partial Dependence Plots`, and `SHAP` Values (an acronym from SHapley Additive exPlanations).
 
 1. **Permutation Importance** - Shows us what features most affect predictions.
+<iframe src="./house_price_predictor/resources/weights.html" width="50%"></iframe>
+
+
 2. **Partial Dependence Plots** - Shows us how a feature affects predictions.
 3. **SHAP Values** - SHows us the impact of each feature for a particular prediction.
 
-Note: These tools are used after a model has been fit. It uses the same script as the one from serialization to train the model.
-
-The following observations were recorded from the excercise:
-1. 
-
+Note: These tools are used after a model has been fit.
 
 
 ### **References**
