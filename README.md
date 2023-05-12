@@ -13,7 +13,7 @@ The transformed data is then used to train a baseline model, from which the best
 - [Overview](#overview)
 - [Tools and Technologies](#tools-and-technologies)
 - [Folder Structure](#folder-structure)
-
+- [Process Flow Chart](#process-flow-chart)
 
 ### **Tools and Technologies**
 - Programming Language: Python
@@ -62,31 +62,38 @@ The project folder contains the following directories and files:
 - `model_explanation`: Contains a Jupyter notebook for model explanation and interpretation.
     - `ml_explainability.ipynb`: A notebook that explores the effects of the features in the model using partial dependence plots, permutation importance, and SHAP values.
 
-### **Flow Chart**
+### **Process Flow Chart**
 
 ```mermaid
 graph TD;
-    A[Get data from CSV] --> B{Database};
-    B --> C[Extract data from database];
-    C --> D{EDA};
-    D --> |Yes| E[Feature Selection];
-    D --> |No| C;
-    E --> F{Preprocessing};
-    F --> |Yes| G[Model Selection];
-    G --> H{Model Optimization};
-    H --> |Yes| I[Export Model];
-    H --> |No| G;
-    I --> J[Export Columns];
-    I --> K[Export Encoder];
-    J --> L[Web App];
-    K --> L;
-    L --> M[User Input];
-    M --> N[Load Model];
-    N --> O[Predict];
-    O --> P[Display Result];
+    A[Get data from CSV] --> |Data Injection| B[SQL Database];
+    B --> C[Load data from database to dataframe];
+    C --> D[EDA];
+    D --> E[Initial Feature Selection];
+    E --> F[Preprocessing];
+    F --> G[Model Selection];
+    G --> H[Model Iteration];
+    H --> I[Feature Engineering]
+    HH --> |No| H;
+    H --> J[Hyperparameter Tuning]
+    I --> HH{Best Model}
+    J --> HH{Best Model}
+    HH --> |Yes| K[Serialization];
+    K --> L[Export Columns];
+    K --> M[Export Encoder];
+    K --> KK[Export Trained Model];
+    L --> N{Web App};
+    M --> N;
+    KK --> N;
+    O[User Input] --> N;
+    N --> Q[Predicted Predict];
+    N --> R[Price Explanation];
 ```
+### **Data Engineering**
+The historical data on sales prices for houses in Melbourne [^1].
+[^1]: This is the first footnote.
 
-The goal of the project is to predict house prices in Melbourne, using machine learning algorithms and a dataset of historical house sales. The web application allows users to enter information about a house and receive a predicted sale price based on the trained model.
+The goal of the project is to predict house prices in Melbourne^1^, using machine learning algorithms and a dataset of historical house sales. The web application allows users to enter information about a house and receive a predicted sale price based on the trained model.
 
 The project is designed to showcase an end-to-end data science project. It covers various aspects as follows:
 
@@ -101,8 +108,11 @@ The project is designed to showcase an end-to-end data science project. It cover
 Here's a screenshot of the app:
 
 
-<img src="./house_price_predictor/resources/webapp_img1.png" alt="Screenshot of my app" width="500"/><br>
+<img src="./house_price_predictor/resources/webapp_screenshot1.png" alt="Screenshot of my app" width="500"/><br>
 
-<img src="./house_price_predictor/resources/webapp_img2.png" alt="Screenshot of my app" width="500"/>
+<img src="./house_price_predictor/resources/webapp_screenshot2.png" alt="Screenshot of my app" width="500"/>
 
 The project demonstrates the entire data science process, from data collection to web application development, and can serve as a template for similar projects in the future.
+
+### **References**
+[1]: https://www.kaggle.com/datasets/dansbecker/melbourne-housing-snapshot Melbourne housing prices snapshot from Kagglle
