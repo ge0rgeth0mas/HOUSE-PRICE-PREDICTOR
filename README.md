@@ -64,26 +64,6 @@ The project folder contains the following directories and files:
 
 ### **Flow Chart**
 
-graph TD
-A[Get data from CSV] --> B{Database};
-B --> C[Extract data from database];
-C --> D{EDA};
-D --> |Yes| E[Feature Selection];
-D --> |No| C;
-E --> F{Preprocessing};
-F --> |Yes| G[Model Selection];
-G --> H{Model Optimization};
-H --> |Yes| I[Export Model];
-H --> |No| G;
-I --> J[Export Columns];
-I --> K[Export Encoder];
-J --> L[Web App];
-K --> L;
-L --> M[User Input];
-M --> N[Load Model];
-N --> O[Predict];
-O --> P[Display Result];
-
 ```mermaid
 graph TD;
     A[Get data from CSV] --> B{Database};
