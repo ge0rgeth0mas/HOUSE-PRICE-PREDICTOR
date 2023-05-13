@@ -4,7 +4,9 @@ import os
 from house_price_predictor.data_engineering.loaddata_fromdb import *
 
 # Import Data to Dataframe
+
 melb_house_prices = get_df('melb_data')
+print("Loaded data from database")
 
 # Extract Target column from Data
 X = melb_house_prices.drop('price', axis=1)

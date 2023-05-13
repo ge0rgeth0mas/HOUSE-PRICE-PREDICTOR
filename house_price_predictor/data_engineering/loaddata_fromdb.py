@@ -5,7 +5,6 @@ import os
 from . import current_folder_path as cf_path
 
 path = cf_path.get_current_path()+"/"
-print(path)
 
 #Read config file containing databas login credentials
 config=configparser.ConfigParser()
@@ -13,7 +12,6 @@ if __name__ == '__main__':
     path = path+'mydb_config.ini' #in case the module is being used directly
     
 else:
-    print(os.path.basename(os.path.normpath(path)))
     if os.path.basename(os.path.normpath(path))== 'data_engineering':
         path = path+'mydb_config.ini' # in case the module is being called from a python script that gets CWD from os.getcwd()
     else:

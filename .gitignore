@@ -7,7 +7,5 @@ poetry.toml
 .DS_Store
 __pycache__
 house_price_predictor/resources/house_price_predictor.pickle
-house_price_predictor/resources/columns.json
-.gitignore
-house_price_predictor/resources/suburb.json
 house_price_predictor/resources/target_encoder.pickle
+tests/test.ipynb
