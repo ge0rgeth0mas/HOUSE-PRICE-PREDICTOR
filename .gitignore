@@ -6,6 +6,4 @@ poetry.toml
 */__pycache__
 .DS_Store
 __pycache__
-house_price_predictor/resources/house_price_predictor.pickle
-house_price_predictor/resources/target_encoder.pickle
 tests/test.ipynb
