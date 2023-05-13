@@ -43,6 +43,12 @@ X = te.fit_transform(X, y)
 
 X[TargetEncodeCols] /= 100000
 
+# Export data in case user wants to generate model instead of downloading pickle file (using model_generator.py)
+# The trained Random Forest Regressor model is a large file ~500MB
+# Data will be rounded but for prediction purpose the data will suffice.
+data = pd.concat([X, y], axis=1)
+data.to_csv(os.getcwd()+'/house_price_predictor/resources/data.csv', index=False, encoding='utf-8', header=True)
+
 # Train Random Forest Regressor model with n_estimators=450, max_features=4
 from sklearn.ensemble import RandomForestRegressor
 model = RandomForestRegressor(n_estimators=450, max_features=4, random_state=1)

@@ -7,3 +7,4 @@ poetry.toml
 .DS_Store
 __pycache__
 tests/test.ipynb
+tests/data.csv

@@ -9,6 +9,8 @@ This project demonstrates the various stages of a real-world data science projec
 
 The transformed data is then used to train a baseline model, from which the best model is selected. The selected model is tuned to find the optimum hyperparameters and features, ensuring the highest possible accuracy. Finally, the optimized model is used to create a web app that predicts the selling price of a house based on the selected features.
 
+---
+
 ### **Contents**
 - [Overview](#overview)
 - [Tools and Technologies](#tools-and-technologies)
@@ -25,6 +27,8 @@ The transformed data is then used to train a baseline model, from which the best
 - [Future Work](#future-work)
 - [References](#references)
 
+---
+
 ### **Tools and Technologies**
 - Programming Language: Python
 - Database: PostgreSQL
@@ -38,6 +42,8 @@ The transformed data is then used to train a baseline model, from which the best
 - Serialization: Pickle, JSON
 - Web Framework: Streamlit
 - Model Interpretation: SHAP, Permuation Importance, Partail Dependence Plots
+
+---
 
 ### **Folder Structure**
 The project folder contains the following directories and files:
@@ -53,6 +59,7 @@ The project folder contains the following directories and files:
     - `target_encoder.pickle`: An encoded version of categorical features used in the model.
     - `columns.json`: A JSON file containing information about the columns used in the model.
     - `suburb.json`: A JSON file containing information about the prperty count and region for each suburb.
+    - `data.csv`: A CSV file containing the data after feature engineering to generate a trained model in case it is not being downloaded from GitHub due to its large size.
 - `data_engineering`: Contains scripts for loading data, creating a database, and getting data from the database.
     - `createddb.sh`: A shell script to create a PostgreSQL database.
     - `db_config.py`: Generate a configuration file for the database.
@@ -66,11 +73,14 @@ The project folder contains the following directories and files:
 - `modeling`: Contains Jupyter notebooks for modeling and hyperparameter tuning.
     - `modeling.ipynb`: A notebook containing data preprocessing, model selection, feature selection, and hyperparameter tuning.
 - `serialization`: Contains a script to export the trained model, encoder, and column data.
-    - `price_predictor.py`: A script to train the model using selected features and export it to the resources folder.
+    - `price_predictor.py`: A script to train the model using selected features and export it to the resources folder, along with the encoder user to handle categorical features and also names of columns.
+    - `model_generator.py`: A script to generate `house_price_predictor.pickle` in case its is not being downloaded from github due to its large size.
 - `web_app`: Contains a script for the web app deployment.
     - `pricepredictor_webapp.py`: A script to create the web app that takes user input and displays the predicted price along with feature importance using SHAP values.
 - `model_explanation`: Contains a Jupyter notebook for model explanation and interpretation.
     - `ml_explainability.ipynb`: A notebook that explores the effects of the features in the model using partial dependence plots, permutation importance, and SHAP values.
+
+---
 
 ### **Process Flow Chart**
 
@@ -99,6 +109,8 @@ graph TD;
     N --> Q[Predicted Predict];
     N --> R[Price Explanation];
 ```
+---
+
 ### **Data Engineering**
 The historical data on sales prices for houses in Melbourne<sup>[1](#ref1)</sup> was collected as a csv file and and injected into PostgreSQL database using Psycopg2. This has the following advantages:
 1. **Performance**: SQL databases are optimized for handling large amounts of structured data. Querying from a database is faster when the data is large.
@@ -109,8 +121,12 @@ The historical data on sales prices for houses in Melbourne<sup>[1](#ref1)</sup>
 
 A script that loads the queried data into a Pandas dataframe using SQLAlchemy has also been created. This script is used for the remaining prcoesses, when the data is required.
 
+---
+
 ### **Data Analysis**
 Exploratory Data Analysis(EDA) was conducted on the data to gather insights from the data. Viuslaizations were created using matplotlib and seaborn to get a deeper understanding of the data. This aided in identifying outliers, understanding correlations, exploring fetaure engineering possibilities, and in indentifying features that might be better dropped due to being redundant or providing little to know value.
+
+---
 
 ### **Modeling**
 #### **Preprocessing**
@@ -119,6 +135,8 @@ Examples of feature engineering done are:
 1. The natural log of the landsize was observed to show a higher correlation with price and was used to replace the landsize feature.
 2. The categorical features were encoded with One-Hot Encoding and Target encoding. Target encoding proved to be the better option and was therefore employed in the final model.
 
+---
+
 #### **Model Selection**
 The training and test set was used to evaluate the performance of the following supervised learning models from Scikit-Learn:
 1. **Liner Regression**
@@ -126,6 +144,8 @@ The training and test set was used to evaluate the performance of the following 
 3. **Random Forest Regressor**
 
 Random Forest Regressor proved to be the better choice for the data as it had the lowest **Mean Absolute Error(MAE)** and the highest **R2 Score**.
+
+---
 
 #### **Model Iteration**
 The Random Forest Regressor was then used to evalaute various combinations of features using 5 fold **cross-validation**. This aided in **Feature Selection** to get the best predictions and also to decide what inputs would be required from a user to predict a house's price.
@@ -147,12 +167,16 @@ The optimum hyperparemeters for the Random Forest Regressor identified were:
 * `n_estimators=450`
 * `max_features=4`
 
+---
+
 ### **Serialization**
 The entire process of feature selection, feature engineering and model training was carried out on the entire data in a `price_predictor.py` script for production. The script also exported the following to the resouces folder for access by the web app:
 1. The trained model (`pickle` file)
 2. The fitted target encoder (`pickle` file)
 3. The names of features used to train the model (`JSON` file)
 4. The Number of properties in each suburb along with the region where each suburb falls (`JSON` file)
+
+---
 
 ### **Web App**
 The front end of the web app is designed using `streamlit`. The User Interface is kept minimalistic and takes in the following details from the user as Input:
@@ -172,6 +196,7 @@ Upon entering the details and clicking the **Predict** button, the script does t
 4. It uses the imported trained model to predict the selling price for the property with **78% accuracy** as observed with R2 score.
 5. It calculates the **SHAP values** for the observation and displays a bar chart that shows the contribution that each feature had, in raising or lowering the price of the house.
 
+
 #### **Web App Screenshots**
 <img src="./house_price_predictor/resources/webapp_screenshot1.png" alt="Screenshot1 of my app" width="500"/><br>
 
@@ -179,22 +204,59 @@ Upon entering the details and clicking the **Predict** button, the script does t
 
 <br>
 
-### **Running the Web App**
-#### Prerequistites 
-Before running the web app, you need to have [Python 3](https://www.python.org/downloads/) and [Poetry](https://python-poetry.org/docs/#installation) installed on your system.
+---
 
-You can also install poetry using the following command
+### **Running the Web App**
+You can run the web app by ecxecuting the following commands in terminal or command prompt.
+
+#### **Prerequistites**
+1. Before running the web app, you need to have [Python 3](https://www.python.org/downloads/) and [Poetry](https://python-poetry.org/docs/#installation) installed on your system.
+
+You can also install poetry using the following command in terminal or command prompt
 
 ```console
 pipx install poetry
 ```
 
-#### Run the web app with following steps
-1. Clone 
+#### **Clone the Repository**
+2. Navigate to the directory where you want to clone the repository.
+```console
+cd <directory>
+```
+3. Clone the repository by running the following command in the terminal:
+```console
+git clone https://github.com/ge0rgeth0mas/HOUSE-PRICE-PREDICTOR.git
+```
 
+#### **Installing Dependencies**
+4. Once you have cloned the repository, navigate to the root directory of the project in a terminal or command prompt.
+```console
+cd <directory>/HOUSE-PRICE-PREDICTOR
+```
+5. Use Poetry to install the necessary dependencies for the web app by running the following command:
+```console
+poetry install
+```
+This will install all the dependencies specified in the pyproject.toml file.
+6. Activate the virtual environment created by Poetry using the `poetry shell` command:
+```console
+poetry shell
+```
 
+#### **Check before running web app**
+7. The web app uses a trained model to make predictions that is stored in resources, with the name `house_price_predictor.pickle`. If this file is missing, run the following command to generate it.
+```console
+python house_price_predictor/serialization/model_generator.py
+```
 
+#### **Running the Web App**
+8. After activating the virtual environment and ensuring `house_price_predictor.pickle` is present, you can run the web app using the following command:
+```console
+streamlit run house_price_predictor/web_app/pricepredictor_webapp.py
+```
+This will launch the app in your default web browser. From there, you can interact with the app and explore its features.
 
+---
 
 ### **Model Explanation**
 A Jupyter notebook was used to explain the importance of the features from the data in making predictions. Three tools were used for this purpose, namely, `Permutation Importance`, `Partial Dependence Plots`, and `SHAP` Values (an acronym from SHapley Additive exPlanations).
@@ -236,8 +298,12 @@ We observe that an increse in number of rooms and bathrooms leads to an increase
 
 An example of the SHAP values being used to explain feature importance for a particular set of features used to make a prediction can be seen in the web app screenshot [above](#output).
 
+---
+
 ### **Conclusion**
 Real world data on past recorded sales price for houses in Melbourne has been used to develop an end-to-end data science project. The project shows the various stages involved such as data acquisition, data cleaning, exploratory data analysis (EDA), feature engineering, modeling, serialization, and web app deployment along with ML explainability.
+
+---
 
 ### **Future Work**
 Possible future works include:
@@ -245,5 +311,9 @@ Possible future works include:
 2. Automating data collection to load more data in to the databse.
 3. Deploying the web app onto a cloud service.
 
+---
+
 ### **References**
 1. <a id="ref1"></a>: https://www.kaggle.com/datasets/dansbecker/melbourne-housing-snapshot Melbourne housing prices snapshot from Kaggle
+
+---
