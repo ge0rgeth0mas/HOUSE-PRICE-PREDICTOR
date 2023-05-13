@@ -12,20 +12,20 @@ The transformed data is then used to train a baseline model, from which the best
 ---
 
 ### **Contents**
-- [Overview](#overview)
-- [Tools and Technologies](#tools-and-technologies)
-- [Folder Structure](#folder-structure)
-- [Process Flow Chart](#process-flow-chart)
-- [Data Engineering](#data-engineering)
-- [Data Analysis](#data-analysis)
-- [Modeling](#modeling)
-- [Serialization](#serialization)
-- [Web App](#web-app)
-- [Running the Web App](#running-the-web-app)
-- [Model Explanataion](#model-explanation)
-- [Conclusion](#conclusion)
-- [Future Work](#future-work)
-- [References](#references)
+1. [Overview](#overview)
+2. [Tools and Technologies](#tools-and-technologies)
+3. [Folder Structure](#folder-structure)
+4. [Process Flow Chart](#process-flow-chart)
+5. [Data Engineering](#data-engineering)
+6. [Data Analysis](#data-analysis)
+7. [Modeling](#modeling)
+8. [Serialization](#serialization)
+9. [Web App](#web-app)
+10. [Running the Web App](#running-the-web-app)
+11. [Model Explanataion](#model-explanation)
+12. [Conclusion](#conclusion)
+13. [Future Work](#future-work)
+14. [References](#references)
 
 ---
 
@@ -94,20 +94,20 @@ graph TD;
     F --> G[Model Selection];
     G --> H[Model Iteration];
     H --> I[Feature Engineering]
-    HH --> |No| H;
     H --> J[Hyperparameter Tuning]
-    I --> HH{Best Model}
-    J --> HH{Best Model}
-    HH --> |Yes| K[Serialization];
-    K --> L[Export Columns];
-    K --> M[Export Encoder];
-    K --> KK[Export Trained Model];
-    L --> N{Web App};
-    M --> N;
-    KK --> N;
-    O[User Input] --> N;
-    N --> Q[Predicted Predict];
-    N --> R[Price Explanation];
+    I --> K{Best Model}
+    K --> |No| H;
+    J --> K
+    K --> |Yes| L[Serialization];
+    L --> M[Export Columns];
+    L --> N[Export Encoder];
+    L --> P[Export Trained Model];
+    M --> Q{Web App};
+    N --> Q;
+    P --> Q;
+    O[User Input] --> Q;
+    Q --> R[Predicted Predict];
+    Q --> S[Price Explanation];
 ```
 ---
 
