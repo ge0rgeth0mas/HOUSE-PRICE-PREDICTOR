@@ -284,13 +284,22 @@ The features are shown in decreasing order of importance.
 
 2. **Partial Dependence Plots** - Shows us how a feature affects predictions.
 
-<img src="./house_price_predictor/model_explanation/images/partial_dependence_1.png" alt="Rooms PDD" width="250" height="250">
-<img src="./house_price_predictor/model_explanation/images/partial_dependence_3.png" alt="Distance PDD" width="250" height="250">
-<img src="./house_price_predictor/model_explanation/images/partial_dependence_4.png" alt="Bathrooms PDD" width="250" height="250">
-<img src="./house_price_predictor/model_explanation/images/partial_dependence_5.png" alt="Latitude PDD" width="250" height="250">
-<img src="./house_price_predictor/model_explanation/images/partial_dependence_6.png" alt="Longitude PDD" width="250" height="250">
-<img src="./house_price_predictor/model_explanation/images/partial_dependence_7.png" alt="Property Count PDD" width="250" height="250">
-<img src="./house_price_predictor/model_explanation/images/partial_dependence_8.png" alt="Landsize PDD" width="250" height="250">
+<table>
+  <tr>
+    <td><img src="./house_price_predictor/model_explanation/images/partial_dependence_1.png" alt="Rooms PDD" width="300" height="300"></td>
+    <td><img src="./house_price_predictor/model_explanation/images/partial_dependence_3.png" alt="Distance PDD" width="300" height="300"></td>
+    <td><img src="./house_price_predictor/model_explanation/images/partial_dependence_4.png" alt="Bathrooms PDD" width="300" height="300"></td>
+  </tr>
+  <tr>
+    <td><img src="./house_price_predictor/model_explanation/images/partial_dependence_5.png" alt="Latitude PDD" width="300" height="300"></td>
+    <td><img src="./house_price_predictor/model_explanation/images/partial_dependence_6.png" alt="Longitude PDD" width="300" height="300"></td>
+    <td><img src="./house_price_predictor/model_explanation/images/partial_dependence_7.png" alt="Property Count PDD" width="300" height="300"></td>
+  </tr>
+  <tr>
+    <td colspan="1"><img src="./house_price_predictor/model_explanation/images/partial_dependence_8.png" alt="Landsize PDD" width="300" height="300"></td>
+    <td colspan="2"><img src="./house_price_predictor/model_explanation/images/partial_dependence_9.png" alt="Coordinates PDD" width="600" height="300"></td>
+  </tr>
+</table>
 
 We observe that an increse in number of rooms and bathrooms leads to an increase the price of a property, while being further away from the CBD generally tends to lower the property value. We can also see that the larger the landsize the higher the property value. Latitude, Logitude, and property count gives us some interesting insights as well while haveing a more non-linear relationshio with price.
 
