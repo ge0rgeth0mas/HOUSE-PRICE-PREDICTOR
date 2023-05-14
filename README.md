@@ -22,7 +22,7 @@ The transformed data is then used to train a baseline model, from which the best
 8. [Serialization](#serialization)
 9. [Web App](#web-app)
 10. [Running the Web App](#running-the-web-app)
-11. [Model Explanataion](#model-explanation)
+11. [Model Explanation](#model-explanation)
 12. [Conclusion](#conclusion)
 13. [Future Work](#future-work)
 14. [References](#references)
@@ -41,7 +41,7 @@ The transformed data is then used to train a baseline model, from which the best
 - Hyperparameter tuning: GridSearchCV
 - Serialization: Pickle, JSON
 - Web Framework: Streamlit
-- Model Interpretation: SHAP, Permuation Importance, Partail Dependence Plots
+- Model Interpretation: SHAP, Permutation Importance, Partial Dependence Plots
 
 ---
 
@@ -58,10 +58,10 @@ The project folder contains the following directories and files:
     - `house_price_predictor.pickle`: A trained model for predicting house prices.
     - `target_encoder.pickle`: An encoded version of categorical features used in the model.
     - `columns.json`: A JSON file containing information about the columns used in the model.
-    - `suburb.json`: A JSON file containing information about the prperty count and region for each suburb.
+    - `suburb.json`: A JSON file containing information about the property count and region for each suburb.
     - `data.csv`: A CSV file containing the data after feature engineering to generate a trained model in case it is not being downloaded from GitHub due to its large size.
 - `data_engineering`: Contains scripts for loading data, creating a database, and getting data from the database.
-    - `createddb.sh`: A shell script to create a PostgreSQL database.
+    - `createdb.sh`: A shell script to create a PostgreSQL database.
     - `db_config.py`: Generate a configuration file for the database.
     - `myd_config.ini`: Configuration file generated for the database.   
     - `getdata_from_csv.py`: A script to load data from the CSV file to a DataFrame.
@@ -106,7 +106,7 @@ graph TD;
     N --> Q;
     P --> Q;
     O[User Input] --> Q;
-    Q --> R[Predicted Predict];
+    Q --> R[Predicted Price];
     Q --> S[Price Explanation];
 ```
 ---
@@ -119,18 +119,18 @@ The historical data on sales prices for houses in Melbourne<sup>[1](#ref1)</sup>
 4. **Security**: SQL databases offer advanced security features, such as user authentication and access control, to protect sensitive data.
 5. **Collaboration**: By storing data in a centralized SQL database, multiple users can access and query the same dataset concurrently.
 
-A script that loads the queried data into a Pandas dataframe using SQLAlchemy has also been created. This script is used for the remaining prcoesses, when the data is required.
+A script that loads the queried data into a Pandas dataframe using SQLAlchemy has also been created. This script is used for the remaining processes, when the data is required.
 
 ---
 
 ### **Data Analysis**
-Exploratory Data Analysis(EDA) was conducted on the data to gather insights from the data. Viuslaizations were created using matplotlib and seaborn to get a deeper understanding of the data. This aided in identifying outliers, understanding correlations, exploring fetaure engineering possibilities, and in indentifying features that might be better dropped due to being redundant or providing little to know value.
+Exploratory Data Analysis(EDA) was conducted on the data to gather insights from the data. Visualizations were created using matplotlib and seaborn to get a deeper understanding of the data. This aided in identifying outliers, understanding correlations, exploring feature engineering possibilities, and in identifying features that might be better dropped due to being redundant or providing little to know value.
 
 ---
 
 ### **Modeling**
 #### **Preprocessing**
-The insights gathere from EDA enabled us to perform an initial feature selection and feature engineering. The data was then split into a **training set** and **test set**. 
+The insights gathered from EDA enabled us to perform an initial feature selection and feature engineering. The data was then split into a **training set** and **test set**. 
 Examples of feature engineering done are:
 1. The natural log of the landsize was observed to show a higher correlation with price and was used to replace the landsize feature.
 2. The categorical features were encoded with One-Hot Encoding and Target encoding. Target encoding proved to be the better option and was therefore employed in the final model.
@@ -140,7 +140,7 @@ Examples of feature engineering done are:
 #### **Model Selection**
 The training and test set was used to evaluate the performance of the following supervised learning models from Scikit-Learn:
 1. **Liner Regression**
-2. **Decsion Tree Regressor**
+2. **Decision Tree Regressor**
 3. **Random Forest Regressor**
 
 Random Forest Regressor proved to be the better choice for the data as it had the lowest **Mean Absolute Error(MAE)** and the highest **R2 Score**.
@@ -148,29 +148,29 @@ Random Forest Regressor proved to be the better choice for the data as it had th
 ---
 
 #### **Model Iteration**
-The Random Forest Regressor was then used to evalaute various combinations of features using 5 fold **cross-validation**. This aided in **Feature Selection** to get the best predictions and also to decide what inputs would be required from a user to predict a house's price.
+The Random Forest Regressor was then used to evaluate various combinations of features using 5 fold **cross-validation**. This aided in **Feature Selection** to get the best predictions and also to decide what inputs would be required from a user to predict a house's price.
 The selected features were:
 1. The number of rooms
 2. The number of bathrooms
 3. The type of property (House/Cottage/Villa, Townhouse, Unit/Duplex, or other)
 4. The person who sold the house
-5. The coordinates of the house (Latitude and Logitude)
+5. The coordinates of the house (Latitude and Longitude)
 6. The region where the house is located
 7. The number of properties in the suburb
 8. The year of sale
 9. Natural log of the landsize
 10. Distance of the property from the Central Business District (CBD)
 
-Once the features that aided in getting the best prediction scores were identified, **Hyperparameter Tuning** was done to identify the parameter that gave the best score in Cross-Validation using **GridSearchCV**. The features and hyperparemeters were also tested for **Overfitting** using the test set.
+Once the features that aided in getting the best prediction scores were identified, **Hyperparameter Tuning** was done to identify the parameter that gave the best score in Cross-Validation using **GridSearchCV**. The features and hyperparameters were also tested for **Overfitting** using the test set.
 
-The optimum hyperparemeters for the Random Forest Regressor identified were:
+The optimum hyperparameters for the Random Forest Regressor identified were:
 * `n_estimators=450`
 * `max_features=4`
 
 ---
 
 ### **Serialization**
-The entire process of feature selection, feature engineering and model training was carried out on the entire data in a `price_predictor.py` script for production. The script also exported the following to the resouces folder for access by the web app:
+The entire process of feature selection, feature engineering and model training was carried out on the entire data in a `price_predictor.py` script for production. The script also exported the following to the resources folder for access by the web app:
 1. The trained model (`pickle` file)
 2. The fitted target encoder (`pickle` file)
 3. The names of features used to train the model (`JSON` file)
@@ -207,9 +207,9 @@ Upon entering the details and clicking the **Predict** button, the script does t
 ---
 
 ### **Running the Web App**
-You can run the web app by ecxecuting the following commands in terminal or command prompt.
+You can run the web app by executing the following commands in terminal or command prompt.
 
-#### **Prerequistites**
+#### **Prerequisites**
 1. Before running the web app, you need to have [Python 3](https://www.python.org/downloads/) and [Poetry](https://python-poetry.org/docs/#installation) installed on your system.
 
 You can also install poetry using the following command in terminal or command prompt
@@ -301,7 +301,7 @@ The features are shown in decreasing order of importance.
   </tr>
 </table>
 
-We observe that an increse in number of rooms and bathrooms leads to an increase the price of a property, while being further away from the CBD generally tends to lower the property value. We can also see that the larger the landsize the higher the property value. Latitude, Logitude, and property count gives us some interesting insights as well while haveing a more non-linear relationshio with price.
+We observe that an increase in number of rooms and bathrooms leads to an increase the price of a property, while being further away from the CBD generally tends to lower the property value. We can also see that the larger the landsize the higher the property value. Latitude, Longitude, and property count gives us some interesting insights as well while having a more non-linear relationship with price.
 
 3. **SHAP Values** - Shows us the impact of each feature for a particular prediction.
 
@@ -317,7 +317,7 @@ Real world data on past recorded sales price for houses in Melbourne has been us
 ### **Future Work**
 Possible future works include:
 1. Including more models such as `LightGBM` and `XGBoost` regressors in model selection.
-2. Automating data collection to load more data in to the databse.
+2. Automating data collection to load more data in to the database.
 3. Deploying the web app onto a cloud service.
 
 ---
