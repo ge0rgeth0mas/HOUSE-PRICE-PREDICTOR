@@ -32,7 +32,7 @@ The transformed data is then used to train a baseline model, from which the best
 ### **Tools and Technologies**
 - Programming Language: Python
 - Database: PostgreSQL
-- Data Injection: Psycopg2
+- Data Ingestion: Psycopg2
 - ORM: SQLAlchemy
 - Data Analysis: Pandas, NumPy
 - Data Visualization: Matplotlib, Seaborn
@@ -65,7 +65,7 @@ The project folder contains the following directories and files:
     - `db_config.py`: Generate a configuration file for the database.
     - `myd_config.ini`: Configuration file generated for the database.   
     - `getdata_from_csv.py`: A script to load data from the CSV file to a DataFrame.
-    - `datainjection_todb.py`: A script to load data from the DataFrame to the database.
+    - `dataingestion_todb.py`: A script to load data from the DataFrame to the database.
     - `current_folder_path.py`: A function that returns the current directory path.
     - `loaddata_fromdb.py`: A script to load data from the database to a DataFrame.
 - `data_analysis`: Contains Jupyter notebooks for data exploration and analysis.
@@ -86,7 +86,7 @@ The project folder contains the following directories and files:
 
 ```mermaid
 graph TD;
-    A[Get data from CSV] --> |Data Injection| B[SQL Database];
+    A[Get data from CSV] --> |Data Ingestion| B[SQL Database];
     B --> C[Load data from database to dataframe];
     C --> D[EDA];
     D --> E[Initial Feature Selection];
@@ -112,7 +112,7 @@ graph TD;
 ---
 
 ### **Data Engineering**
-The historical data on sales prices for houses in Melbourne<sup>[1](#ref1)</sup> was collected as a csv file and and injected into PostgreSQL database using Psycopg2. This has the following advantages:
+The historical data on sales prices for houses in Melbourne<sup>[1](#ref1)</sup> was collected as a csv file and and loaded into PostgreSQL database using Psycopg2. This has the following advantages:
 1. **Performance**: SQL databases are optimized for handling large amounts of structured data. Querying from a database is faster when the data is large.
 2. **Data integrity**: SQL databases have built-in mechanisms for ensuring data integrity, such as constraints, indexes, and transactions. These mechanisms can help prevent data errors and inconsistencies, which can be difficult to detect and correct in a large DataFrame.
 3. **Scalability**: SQL databases can handle large datasets that may not fit into memory, and can also be scaled up by adding more computing resources or partitioning data across multiple servers. 
